@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticket Panel</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-dot"></span> Ticket Panel</div>
+      <div id="userBox" class="user-box">Не авторизован</div>
+      <nav>
+        <button class="nav active" data-view="builder">Конструктор</button>
+        <button class="nav" data-view="settings">Права и тикеты</button>
+        <button class="nav" data-view="history">Панели</button>
+      </nav>
+      <button id="logout" class="logout hidden">Выйти</button>
+    </aside>
+
+    <main class="content">
+      <section id="loginView" class="center-card">
+        <div class="hero-icon">🎫</div>
+        <h1>Управление тикетами</h1>
+        <p>Создавай панели прямо из сайта. Discord-команды не нужны.</p>
+        <a class="primary big" href="/auth/login">Войти через Discord</a>
+        <div id="errorBox" class="error"></div>
+      </section>
+
+      <section id="appView" class="hidden">
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">DISCORD MANAGEMENT</div>
+            <h1 id="pageTitle">Конструктор панели</h1>
+          </div>
+          <div class="server-controls">
+            <span id="liveBadge" class="live-badge offline">● Не подключено</span>
+            <select id="guildSelect" class="select large"></select>
+          </div>
+        </header>
+
+        <div id="builderView" class="view">
+          <div class="grid-two">
+            <div class="card">
+              <div class="card-head"><div><h2>Сообщение</h2><span>Как webhook/embed, но через панель</span></div></div>
+              <label>Канал Discord</label>
+              <select id="channel" class="select"></select>
+              <div class="hint">Список обновляется автоматически, когда на сервере появляется новый канал.</div>
+              <label>Заголовок</label>
+              <input id="title" maxlength="256" value="Нужна помощь?" placeholder="Нужна помощь?" />
+              <label>Текст</label>
+              <textarea id="message" maxlength="4000" rows="7" placeholder="Выберите нужную категорию тикета ниже.">Выберите нужную категорию тикета ниже.</textarea>
+              <div class="grid-two compact"><div><label>Цвет</label><input id="color" type="text" value="#5865F2" /></div><div><label>Замена</label><label class="switch-row"><input id="replaceExisting" type="checkbox" checked /><span>Удалять старую панель в этом канале</span></label></div></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><div><h2>Кнопки</h2><span>До 5 кнопок</span></div><button id="addButton" class="secondary">+ Добавить</button></div>
+              <div id="buttonsEditor" class="buttons-editor"></div>
+              <div class="divider"></div>
+              <button id="sendPanel" class="primary full">Опубликовать в Discord</button>
+              <div id="status" class="status"></div>
+            </div>
+          </div>
+
+          <div class="card preview-card">
+            <div class="card-head"><div><h2>Предпросмотр</h2><span>Веб-панель обновляет его сразу</span></div></div>
+            <div class="discord-preview">
+              <div class="discord-message"><div class="avatar">🤖</div><div class="discord-body"><div class="bot-name">Ticket Bot <span>BOT</span></div><div id="previewEmbed" class="embed"><div id="previewTitle" class="embed-title">Нужна помощь?</div><div id="previewMessage">Выберите нужную категорию тикета ниже.</div><div id="previewButtons" class="discord-buttons"></div></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="settingsView" class="view hidden">
+          <div class="grid-two">
+            <div class="card">
+              <div class="card-head"><div><h2>Категория тикетов</h2><span>Общая категория по умолчанию</span></div></div>
+              <select id="ticketCategory" class="select"></select>
+              <div class="hint">Можно также выбрать отдельную категорию прямо для конкретной кнопки.</div>
+            </div>
+            <div class="card">
+              <div class="card-head"><div><h2>Полномочия через роли</h2><span>Выбранные роли получают доступ к панели и тикетам</span></div></div>
+              <div id="rolesEditor" class="roles"></div>
+              <button id="saveSettings" class="primary full">Сохранить права</button>
+              <div id="settingsStatus" class="status"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="historyView" class="view hidden">
+          <div class="card">
+            <div class="card-head"><div><h2>Отправленные панели</h2><span>История последних 50 публикаций</span></div></div>
+            <div id="history" class="history"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
